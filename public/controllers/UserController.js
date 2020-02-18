@@ -204,16 +204,16 @@ class UserController {
 
     selectAll(){
 
-        HttpRequest.get('/users').then(data => {
+        User.getUsersStorage().then(data => {
 
-            data.users.forEach(dataUser=>{
+            data.users.forEach(dataUser => {
 
                 let user = new User();
-    
+
                 user.loadFromJSON(dataUser);
-    
+
                 this.addLine(user);
-    
+
             });
 
         });
@@ -264,11 +264,13 @@ class UserController {
 
                 user.loadFromJSON(JSON.parse(tr.dataset.user));
 
-                user.remove();
+                user.remove().then(data => {
 
-                tr.remove();
+                    tr.remove();
 
-                this.updateCount();
+                    this.updateCount();
+
+                });
 
             }
 
